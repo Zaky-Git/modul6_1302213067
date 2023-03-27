@@ -16,10 +16,12 @@ namespace modul6_1302213067
 
         public sayaTubeUser(string username)
         {
+            Contract.Requires(Username.Length < 100);
+            Contract.Requires(Username != null);
             this.Username = username;
             Random random = new Random();
             this.id = random.Next(9999, 99999);
-            List<sayaTubeUser> uploadVideos= new List<sayaTubeUser>();
+            uploadVideos = new List<sayaTubeVideo>();
         }
 
 
@@ -27,7 +29,7 @@ namespace modul6_1302213067
         public int getTotalVideoPlayCount()
         {
             int tot = 0;
-            for (int i = 0;i<uploadVideos.Count;i++)
+            for (int i = 0; i < uploadVideos.Count; i++)
             {
                 tot = tot + uploadVideos[i].getPlayCount();
             }
@@ -36,15 +38,21 @@ namespace modul6_1302213067
 
         public void AddVideo(sayaTubeVideo video)
         {
+            Contract.Requires(video != null);
+            Contract.Requires(video.getPlayCount() < int.MaxValue);
+            
+
             uploadVideos.Add(video);
+
         }
 
         public void PrintAllVideoPlaycount()
         {
-            Console.WriteLine("User " + Username);
-            for (int i = 0;i<uploadVideos.Count;i++)
+            Console.WriteLine("User : " + Username);
+            for (int i = 0; i < uploadVideos.Count; i++)
             {
-                Console.WriteLine("Video " + (i+1) + " Judul " + uploadVideos[i]);
+                Console.WriteLine("Video " + (i + 1) + " Judul: " + uploadVideos[i].getTitle());
             }
         }
-    }}
+    }
+}
